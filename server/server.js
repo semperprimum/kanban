@@ -13,6 +13,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/goals", require("./routes/goalRoutes"));
+app.use("/api/users/", require("./routes/userRoutes"));
+app.use("/api/boards/", require("./routes/boardRoutes"));
+app.use("/api/boards/", require("./routes/taskRoutes"));
+app.use("/api/boards/", require("./routes/columnRoutes"));
 
 app.use(errorHandler);
 
