@@ -26,6 +26,7 @@ const createBoard = asyncHandler(async (req, res) => {
   const board = await Board.create({
     user: req.user.id,
     name: req.body.name,
+    columns: req.body.columns,
   });
 
   res.status(200).json({ board });
