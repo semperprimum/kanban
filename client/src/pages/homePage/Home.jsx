@@ -3,22 +3,56 @@ import { Nav, Header, Board } from "../../components";
 import { useModal } from "../../hooks/useModal";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getBoards, reset } from "../../features/boards/boardSlice";
+import { Spinner, SpinnerContainer } from "../../components/ui/Spinner.styled";
 
 export const Home = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const createBoardModal = useModal();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { user } = useSelector((state) => state.auth);
+
+  const { boards, isLoading, isError, message } = useSelector(
+    (state) => state.board
+  );
+
   useEffect(() => {
-    if (!localStorage.getItem("user")) {
-      navigate("/register");
+    if (!user) {
+      navigate("/login");
     }
-  });
+    dispatch(getBoards());
+
+    return () => {
+      dispatch(reset());
+    };
+  }, [user, navigate, isError, message, dispatch]);
+
+  const [activeBoard, setActiveBoard] = useState(0);
+
+  const handleActiveBoardChange = (newIndex) => {
+    setActiveBoard(newIndex);
+  };
+
+  if (isLoading) {
+    return (
+      <SpinnerContainer>
+        <Spinner />
+      </SpinnerContainer>
+    );
+  }
 
   return (
     <>
       <header>
-        <Header setIsNavOpen={setIsNavOpen} />
+        <Header
+          activeBoard={activeBoard}
+          boards={boards}
+          handleActiveBoardChange={handleActiveBoardChange}
+          setIsNavOpen={setIsNavOpen}
+        />
       </header>
       <main>
         {createBoardModal.isOpen && (
@@ -26,11 +60,14 @@ export const Home = () => {
         )}
         {isNavOpen && (
           <Nav
+            handleActiveBoardChange={handleActiveBoardChange}
+            activeBoard={activeBoard}
+            boards={boards}
             openModal={createBoardModal.openModal}
             setIsOpen={setIsNavOpen}
           />
         )}
-        <Board />
+        {boards && boards.length && <Board board={boards[activeBoard]} />}
       </main>
     </>
   );

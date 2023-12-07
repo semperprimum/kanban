@@ -4,15 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { register, reset } from "../../features/auth/authSlice";
-import { AiOutlineLoading } from "react-icons/ai";
 import { Input } from "../../components/styles/Modal.styled";
 import {
   AuthWrapper,
   AuthContainer,
   AuthHeader,
-  Paragraph
+  Paragraph,
 } from "../../components/styles/Auth.styled";
 import { Button } from "../../components";
+import { Spinner, SpinnerContainer } from "../../components/ui/Spinner.styled";
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -63,7 +63,11 @@ export const Register = () => {
   };
 
   if (isLoading) {
-    return <AiOutlineLoading />;
+    return (
+      <SpinnerContainer>
+        <Spinner />
+      </SpinnerContainer>
+    );
   }
   return (
     <AuthWrapper>
@@ -107,7 +111,9 @@ export const Register = () => {
             Submit
           </Button>
         </form>
-        <Paragraph>Already have an account? <Link to={"/login"}>Log in</Link>.</Paragraph>
+        <Paragraph>
+          Already have an account? <Link to={"/login"}>Log in</Link>.
+        </Paragraph>
       </AuthContainer>
     </AuthWrapper>
   );

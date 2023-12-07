@@ -12,11 +12,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 
-export function Nav({ setIsOpen, openModal }) {
+export function Nav({
+  setIsOpen,
+  openModal,
+  boards,
+  activeBoard,
+  handleActiveBoardChange,
+}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { user } = useSelector((state) => state.auth);
 
   const onLogout = () => {
     dispatch(logout());
@@ -29,24 +33,14 @@ export function Nav({ setIsOpen, openModal }) {
       <NavContainer>
         <Paragraph>All boards (3)</Paragraph>
         <BoardsList role="list">
-          <BoardItem $active>
-            <NavBtn>
-              <IconBoard />
-              Platform Launch
-            </NavBtn>
-          </BoardItem>
-          <BoardItem>
-            <NavBtn>
-              <IconBoard />
-              Marketing Plan
-            </NavBtn>
-          </BoardItem>
-          <BoardItem>
-            <NavBtn>
-              <IconBoard />
-              Roadmap
-            </NavBtn>
-          </BoardItem>
+          {boards.map((board, index) => (
+            <BoardItem key={board._id} $active={index === activeBoard}>
+              <NavBtn onClick={() => {handleActiveBoardChange(index); setIsOpen(false)}}>
+                <IconBoard />
+                {board.name}
+              </NavBtn>
+            </BoardItem>
+          ))}
         </BoardsList>
         <CreateBoardBtn
           onClick={() => {

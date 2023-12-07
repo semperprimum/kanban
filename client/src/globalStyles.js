@@ -50,6 +50,13 @@ body {
     font-size: var(--fs-300);
 }
 
+main {
+}
+
+#root {
+  min-height: 100vh;
+}
+
 /* A elements that don't have a class get default styles */
 a:not([class]) {
     text-decoration-skip-ink: auto;

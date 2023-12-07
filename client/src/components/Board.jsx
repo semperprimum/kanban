@@ -14,7 +14,7 @@ import EditBoardModal from "./ui/modals/EditBoardModal";
 import DeleteTaskModal from "./ui/modals/DeleteTaskModal";
 import { useModal } from "../hooks/useModal";
 
-export function Board() {
+export function Board({ board }) {
   const viewModal = useModal();
   const editModal = useModal();
   const deleteModal = useModal();
@@ -28,6 +28,11 @@ export function Board() {
   const onDeleteTask = () => {
     viewModal.closeModal();
     deleteModal.openModal();
+  };
+
+  const countCompletedTasks = (arr) => {
+    const completedTasks = arr.filter((task) => task.isCompleted);
+    return completedTasks.length;
   };
   return (
     <>
@@ -46,65 +51,24 @@ export function Board() {
         <EditBoardModal closeModal={editBoardModal.closeModal} />
       )}
       <BoardContainer>
-        <ColumnContainer>
-          <ColumnName>Todo (4)</ColumnName>
-          <TaskList role="list">
-            <TaskItem onClick={() => viewModal.openModal()}>
-              <TaskName>Build UI for onboarding flow</TaskName>
-              <Subtasks>0 of 3 subtasks</Subtasks>
-            </TaskItem>
-            <TaskItem>
-              <TaskName>Build UI for search</TaskName>
-              <Subtasks>0 of 1 subtasks</Subtasks>
-            </TaskItem>
-            <TaskItem>
-              <TaskName>Build settings UI</TaskName>
-              <Subtasks>0 of 2 subtasks</Subtasks>
-            </TaskItem>
-            <TaskItem>
-              <TaskName>QA and test all major user journeys</TaskName>
-              <Subtasks>0 of 2 subtasks</Subtasks>
-            </TaskItem>
-          </TaskList>
-        </ColumnContainer>
-        <ColumnContainer>
-          <ColumnName>Doing (4)</ColumnName>
-          <TaskList role="list">
-            <TaskItem>
-              <TaskName>Build UI for onboarding flow</TaskName>
-              <Subtasks>0 of 3 subtasks</Subtasks>
-            </TaskItem>
-            <TaskItem>
-              <TaskName>Build UI for search</TaskName>
-              <Subtasks>0 of 1 subtasks</Subtasks>
-            </TaskItem>
-          </TaskList>
-        </ColumnContainer>
-        <ColumnContainer>
-          <ColumnName>Done (4)</ColumnName>
-          <TaskList role="list">
-            <TaskItem>
-              <TaskName>Build UI for onboarding flow</TaskName>
-              <Subtasks>0 of 3 subtasks</Subtasks>
-            </TaskItem>
-            <TaskItem>
-              <TaskName>Build UI for search</TaskName>
-              <Subtasks>0 of 1 subtasks</Subtasks>
-            </TaskItem>
-            <TaskItem>
-              <TaskName>Build settings UI</TaskName>
-              <Subtasks>0 of 2 subtasks</Subtasks>
-            </TaskItem>
-            <TaskItem>
-              <TaskName>QA and test all major user journeys</TaskName>
-              <Subtasks>0 of 2 subtasks</Subtasks>
-            </TaskItem>
-            <TaskItem>
-              <TaskName>Build UI for search</TaskName>
-              <Subtasks>0 of 1 subtasks</Subtasks>
-            </TaskItem>
-          </TaskList>
-        </ColumnContainer>
+        {board.columns.map((col) => (
+          <ColumnContainer key={col._id}>
+            <ColumnName>
+              {col.name} ({col.tasks.length})
+            </ColumnName>
+            <TaskList role="list">
+              {col.tasks.map((task) => (
+                <TaskItem key={task._id}>
+                  <TaskName>{task.title}</TaskName>
+                  <Subtasks>
+                    {countCompletedTasks(col.tasks)} of {col.tasks.length}{" "}
+                    subtasks
+                  </Subtasks>
+                </TaskItem>
+              ))}
+            </TaskList>
+          </ColumnContainer>
+        ))}
         <NewColumnBtn onClick={() => editBoardModal.openModal()}>
           + New Column
         </NewColumnBtn>

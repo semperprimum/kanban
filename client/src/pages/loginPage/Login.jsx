@@ -13,6 +13,7 @@ import {
 } from "../../components/styles/Auth.styled";
 import { Input } from "../../components/styles/Modal.styled";
 import { Button } from "../../components";
+import { Spinner, SpinnerContainer } from "../../components/ui/Spinner.styled";
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -57,9 +58,9 @@ export const Login = () => {
 
   if (isLoading) {
     return (
-      <div style={{display: "grid", placeItems: "center", height: "100vh"}}>
-        <AiOutlineLoading style={{fontSize: "5rem"}} />
-      </div>
+      <SpinnerContainer>
+        <Spinner />
+      </SpinnerContainer>
     );
   }
   return (
