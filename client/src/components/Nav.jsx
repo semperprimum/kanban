@@ -8,8 +8,21 @@ import {
 } from "./styles/Nav.styled";
 import { DarkBg } from "./styles/Modal.styled";
 import IconBoard from "../assets/icon-board.svg?react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, reset } from "../features/auth/authSlice";
 
 export function Nav({ setIsOpen, openModal }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth);
+
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  };
   return (
     <>
       <DarkBg aria-hidden="true" onClick={() => setIsOpen(false)} />
@@ -43,6 +56,12 @@ export function Nav({ setIsOpen, openModal }) {
         >
           <IconBoard />+ Create New Board
         </CreateBoardBtn>
+        <NavBtn
+          onClick={onLogout}
+          style={{ marginTop: "1rem", color: "var(--clr-accent-200)" }}
+        >
+          Logout
+        </NavBtn>
       </NavContainer>
     </>
   );

@@ -61,14 +61,12 @@ const editTask = asyncHandler(async (req, res) => {
     throw new Error("Task not found");
   }
 
-  const user = await User.findById(req.user.id);
-
-  if (!user) {
+  if (!req.user) {
     res.status(401);
     throw new Error("User not found");
   }
 
-  if (board.user.toString() !== user.id) {
+  if (board.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not authorized");
   }
@@ -108,9 +106,38 @@ const editTask = asyncHandler(async (req, res) => {
  * @access Private
  */
 const deleteTask = asyncHandler(async (req, res) => {
-  res.status(200).json({
-    message: `Delete task ${req.params.taskId} in a board ${req.params.boardId}`,
-  });
+  const { boardId, taskId } = req.params;
+
+  const board = await Board.findById(boardId);
+
+  if (!board) {
+    res.status(404);
+    throw new Error("Board not found");
+  }
+
+  const task = board.columns
+    .flatMap((col) => col.tasks)
+    .find((t) => t._id.equals(taskId));
+
+  if (!task) {
+    res.status(404);
+    throw new Error("Task not found");
+  }
+
+  if (!req.user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  if (board.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("User not authorized");
+  }
+
+  task.deleteOne();
+  await board.save();
+
+  res.status(200).json({ id: task.id });
 });
 
 module.exports = {

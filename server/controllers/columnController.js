@@ -85,6 +85,11 @@ const deleteColumn = asyncHandler(async (req, res) => {
     throw new Error("Column not found");
   }
 
+  if (column.tasks.length !== 0) {
+    res.status(400);
+    throw new Error("Column with tasks could not be deleted");
+  }
+
   column.deleteOne();
   await board.save();
 

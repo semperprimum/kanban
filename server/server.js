@@ -12,7 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/goals", require("./routes/goalRoutes"));
 app.use("/api/users/", require("./routes/userRoutes"));
 app.use("/api/boards/", require("./routes/boardRoutes"));
 app.use("/api/boards/", require("./routes/taskRoutes"));
@@ -20,4 +19,4 @@ app.use("/api/boards/", require("./routes/columnRoutes"));
 
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server started in port ${port}`));
+app.listen(port, () => console.log(`Server started on port ${port}`));
