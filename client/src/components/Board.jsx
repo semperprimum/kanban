@@ -7,6 +7,8 @@ import {
   TaskName,
   Subtasks,
   NewColumnBtn,
+  EmptyBoardContainer,
+  EmptyBoardText,
 } from "./styles/Board.styled";
 import ViewTaskModal from "./ui/modals/ViewTaskModal";
 import EditTaskModal from "./ui/modals/EditTaskModal";
@@ -15,6 +17,7 @@ import DeleteTaskModal from "./ui/modals/DeleteTaskModal";
 import { useModal } from "../hooks/useModal";
 import { useState } from "react";
 import { countCompletedTasks } from "../utils/countTasks";
+import { Button } from "./ui/Button.styled";
 
 export function Board({ board }) {
   const [activeTask, setActiveTask] = useState(null);
@@ -37,6 +40,28 @@ export function Board({ board }) {
     setActiveTask(task);
     viewModal.openModal();
   };
+
+  if (!board.columns.length) {
+    return (
+      <>
+        {editBoardModal.isOpen && (
+          <EditBoardModal
+            board={board}
+            closeModal={editBoardModal.closeModal}
+          />
+        )}
+
+        <EmptyBoardContainer>
+          <EmptyBoardText>
+            This board is empty. Create a new column to get started.
+          </EmptyBoardText>
+          <Button onClick={() => editBoardModal.openModal()}>
+            + Add New Column
+          </Button>
+        </EmptyBoardContainer>
+      </>
+    );
+  }
 
   return (
     <>

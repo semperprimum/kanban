@@ -24,4 +24,9 @@ export const Button = styled.button`
   &:disabled {
     opacity: 0.25;
   }
+
+  @media only screen and (min-width: 37.5em) {
+    font-size: var(--fs-300);
+    padding: ${(props) => (props.$small ? "0.50rem 1rem" : "0.9rem 1.5rem")};
+  }
 `;

@@ -4,6 +4,7 @@ export const BoardContainer = styled.section`
   overflow: auto;
   padding: 1.5rem 1rem;
   display: flex;
+  height: 100%;
   gap: 1.5rem;
   flex-shrink: 0;
   scrollbar-width: none; // Firefox
@@ -30,10 +31,14 @@ export const BoardContainer = styled.section`
 export const ColumnContainer = styled.div`
   min-width: 17.5rem;
   max-width: 17.5rem;
+  overflow: auto;
 `;
 
 export const ColumnName = styled.h3`
   display: flex;
+  position: sticky;
+  top: 0;
+  padding-bottom: 1.5rem;
   align-items: center;
   gap: 0.75rem;
   color: var(--clr-neutral-100);
@@ -42,6 +47,7 @@ export const ColumnName = styled.h3`
   text-transform: uppercase;
   letter-spacing: 0.15rem;
   line-height: normal;
+  background-color: var(--clr-neutral-700);
 
   &:before {
     content: "";
@@ -56,7 +62,7 @@ export const ColumnName = styled.h3`
 export const TaskList = styled.ul`
   display: grid;
   padding: 0;
-  margin: 1.5rem 0 0 0;
+  margin: 0 0 0 0;
   gap: 1.25rem;
 `;
 
@@ -90,4 +96,21 @@ export const NewColumnBtn = styled.button`
     rgba(43, 44, 55, 0.25) 0%,
     rgba(43, 44, 55, 0.13) 100%
   );
+`;
+
+export const EmptyBoardContainer = styled.div`
+  height: 100%;
+  text-align: center;
+  margin-inline: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const EmptyBoardText = styled.h2`
+  font-size: var(--fs-400);
+  font-weight: var(--fw-bold);
+  color: var(--clr-neutral-400);
+  margin-bottom: 1.5rem;
 `;

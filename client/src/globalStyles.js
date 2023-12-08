@@ -50,11 +50,23 @@ body {
     font-size: var(--fs-300);
 }
 
-main {
+html, body, #root{
+    height: 100%;
 }
 
-#root {
-  min-height: 100vh;
+main {
+    height: calc(100% - 4rem);
+    @media only screen and (min-width: 37.5em) {
+        height: calc(100% - 5.5rem);
+        display: flex;
+        overflow: auto;
+  scrollbar-width: none; // Firefox
+  -ms-overflow-style: none; // IE and Edge
+
+  &::-webkit-scrollbar {
+    display: none; // Chrome, Safari and Opera
+  }
+    }
 }
 
 /* A elements that don't have a class get default styles */

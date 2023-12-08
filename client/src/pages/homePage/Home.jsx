@@ -6,12 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getBoards, reset } from "../../features/boards/boardSlice";
 import { Spinner, SpinnerContainer } from "../../components/ui/Spinner.styled";
+import useMatchMedia from "../../hooks/useMatchMedia";
+import { ShowSidebar } from "../../components/styles/Nav.styled";
+import ShowSidebarIcon from "../../assets/icon-show-sidebar.svg?react";
 
 export const Home = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const createBoardModal = useModal();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isNarrowScreen = useMatchMedia("(max-width: 37.5em)");
 
   const { user } = useSelector((state) => state.auth);
 
@@ -68,6 +73,11 @@ export const Home = () => {
           />
         )}
         {boards && boards.length && <Board board={boards[activeBoard]} />}
+        {!isNarrowScreen && !isNavOpen && (
+          <ShowSidebar onClick={() => setIsNavOpen(true)}>
+            <ShowSidebarIcon />
+          </ShowSidebar>
+        )}
       </main>
     </>
   );

@@ -8,9 +8,11 @@ import {
 } from "./styles/Nav.styled";
 import { DarkBg } from "./styles/Modal.styled";
 import IconBoard from "../assets/icon-board.svg?react";
+import HideSidebarIcon from "../assets/icon-hide-sidebar.svg?react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
+import useMatchMedia from "../hooks/useMatchMedia";
 
 export function Nav({
   setIsOpen,
@@ -27,35 +29,55 @@ export function Nav({
     dispatch(reset());
     navigate("/");
   };
+
+  const isNarrowScreen = useMatchMedia("(max-width: 37.5em)");
+
   return (
     <>
-      <DarkBg aria-hidden="true" onClick={() => setIsOpen(false)} />
+      {isNarrowScreen && (
+        <DarkBg aria-hidden="true" onClick={() => setIsOpen(false)} />
+      )}
       <NavContainer>
-        <Paragraph>All boards (3)</Paragraph>
-        <BoardsList role="list">
-          {boards.map((board, index) => (
-            <BoardItem key={board._id} $active={index === activeBoard}>
-              <NavBtn onClick={() => {handleActiveBoardChange(index); setIsOpen(false)}}>
-                <IconBoard />
-                {board.name}
-              </NavBtn>
-            </BoardItem>
-          ))}
-        </BoardsList>
-        <CreateBoardBtn
-          onClick={() => {
-            openModal();
-            setIsOpen(false);
-          }}
-        >
-          <IconBoard />+ Create New Board
-        </CreateBoardBtn>
-        <NavBtn
-          onClick={onLogout}
-          style={{ marginTop: "1rem", color: "var(--clr-accent-200)" }}
-        >
-          Logout
-        </NavBtn>
+        <div>
+          <Paragraph>All boards (3)</Paragraph>
+          <BoardsList role="list">
+            {boards.map((board, index) => (
+              <BoardItem key={board._id} $active={index === activeBoard}>
+                <NavBtn
+                  onClick={() => {
+                    handleActiveBoardChange(index);
+                    {
+                      isNarrowScreen && setIsOpen(false);
+                    }
+                  }}
+                >
+                  <IconBoard />
+                  {board.name}
+                </NavBtn>
+              </BoardItem>
+            ))}
+          </BoardsList>
+          <CreateBoardBtn
+            onClick={() => {
+              openModal();
+              {
+                isNarrowScreen && setIsOpen(false);
+              }
+            }}
+          >
+            <IconBoard />+ Create New Board
+          </CreateBoardBtn>
+        </div>
+        <div>
+          {!isNarrowScreen && (
+            <NavBtn onClick={() => setIsOpen(false)}>
+              <HideSidebarIcon /> Hide Sidebar
+            </NavBtn>
+          )}
+          <NavBtn onClick={onLogout} style={{ color: "var(--clr-accent-200)" }}>
+            Logout
+          </NavBtn>
+        </div>
       </NavContainer>
     </>
   );

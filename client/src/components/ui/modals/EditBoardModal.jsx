@@ -72,7 +72,7 @@ export default function EditBoardModal({ closeModal, board }) {
   };
 
   return (
-    <Modal onClose={updateBoard} closeModal={closeModal}>
+    <Modal closeModal={closeModal}>
       <ModalHeader>Edit Board</ModalHeader>
       <Label aria-hidden="true">Board Name</Label>
       <form onSubmit={onSubmit}>

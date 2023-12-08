@@ -75,7 +75,7 @@ export default function EditTaskModal({ closeModal, task, board }) {
   ];
 
   return (
-    <Modal onClose={updateTask} closeModal={closeModal}>
+    <Modal closeModal={closeModal}>
       <ModalHeader>{task.title}</ModalHeader>
       <Label aria-hidden="true">Title</Label>
       <form onSubmit={onSubmit}>

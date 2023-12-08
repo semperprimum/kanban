@@ -27,17 +27,23 @@ export default function ViewTaskModal({
 }) {
   const [updatedTask, setUpdatedTask] = useState(task);
   const dispatch = useDispatch();
+  const [changed, setChanged] = useState(false);
 
   const updateTask = () => {
+    if (!changed) return;
+
     dispatch(editTask({ boardId: board._id, taskData: updatedTask }));
   };
 
   const onUpdateStatus = (e) => {
     const newStatus = e.target.value;
+
     setUpdatedTask((prevState) => ({
       ...prevState,
       status: newStatus,
     }));
+
+    setChanged(true);
   };
 
   const onUpdateCompletion = (e, subtaskId) => {
@@ -47,15 +53,19 @@ export default function ViewTaskModal({
 
     if (subtaskIndex !== -1) {
       const updatedSubtasks = [...updatedTask.subtasks];
+
       updatedSubtasks[subtaskIndex] = {
         ...updatedSubtasks[subtaskIndex],
         isCompleted: e.target.checked,
       };
+
       setUpdatedTask((prevState) => ({
         ...prevState,
         subtasks: updatedSubtasks,
       }));
     }
+
+    setChanged(true);
   };
 
   return (

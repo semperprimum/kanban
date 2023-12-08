@@ -6,6 +6,7 @@ export const DarkBg = styled.div`
   position: fixed;
   background-color: hsla(0, 0%, 0%, 0.5);
   inset: 0;
+  z-index: 500;
 `;
 
 export const ModalContainer = styled.div`
@@ -19,6 +20,11 @@ export const ModalContainer = styled.div`
   width: calc(100% - 2rem);
   max-height: calc(100vh - 5rem);
   overflow: auto;
+  z-index: 1000;
+
+  @media only screen and (min-width: 37.5em) {
+    max-width: 30rem;
+  }
 `;
 
 export const ModalHeader = styled.h3`
