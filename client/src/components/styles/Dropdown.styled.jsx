@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ButtonToggle = styled.button`
   background: none;
   border: none;
-  padding: 0;
+  padding-inline: 0.25rem;
 
   & > svg {
     display: block;

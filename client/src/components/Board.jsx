@@ -49,7 +49,13 @@ export function Board({ board }) {
           closeModal={viewModal.closeModal}
         />
       )}
-      {editModal.isOpen && <EditTaskModal closeModal={editModal.closeModal} />}
+      {editModal.isOpen && (
+        <EditTaskModal
+          task={activeTask}
+          board={board}
+          closeModal={editModal.closeModal}
+        />
+      )}
       {deleteModal.isOpen && (
         <DeleteTaskModal
           boardId={board._id}
@@ -58,7 +64,7 @@ export function Board({ board }) {
         />
       )}
       {editBoardModal.isOpen && (
-        <EditBoardModal closeModal={editBoardModal.closeModal} />
+        <EditBoardModal board={board} closeModal={editBoardModal.closeModal} />
       )}
       <BoardContainer>
         {board.columns.map((col) => (

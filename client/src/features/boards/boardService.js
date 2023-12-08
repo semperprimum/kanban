@@ -47,7 +47,6 @@ const editBoard = async (boardId, boardData, token) => {
   };
 
   const response = await axios.put(API_URL + boardId, boardData, config);
-  console.log(response);
   return response.data;
 };
 

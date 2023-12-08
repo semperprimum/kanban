@@ -13,7 +13,6 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { editBoard } from "../../../features/boards/boardSlice";
-import { v4 as uuidv4 } from "uuid";
 
 export default function EditBoardModal({ closeModal, board }) {
   const [updatedBoard, setUpdatedBoard] = useState(board);
@@ -43,48 +42,33 @@ export default function EditBoardModal({ closeModal, board }) {
     });
   };
 
-  const onDeleteColumn = (columnId) => {
-    const column = updatedBoard.columns.filter(
-      (col) => col._id === columnId
-    )[0];
+  const onDeleteColumn = (index) => {
+    const column = updatedBoard.columns[index];
 
     if (column.tasks.length)
       return toast.error(
-        "A column with tasks cannot be deleted. Remove all the tasks first."
+        "A column with tasks cannot be deleted. Remove all tasks first."
       );
 
     setUpdatedBoard((prevState) => {
-      const updatedColumns = prevState.columns.filter(
-        (col) => col._id !== columnId
-      ); // Use !== instead of != for strict comparison
+      const updatedColumns = [...prevState.columns];
+      updatedColumns.splice(index, 1);
 
       return { ...prevState, columns: updatedColumns };
     });
   };
 
   const onAddColumn = () => {
-    const temporaryColumn = {
-      _id: `temp_${uuidv4()}`, // Generate a temporary ID
-      name: "New Column", // You can set a default name or make it empty
-      tasks: [], // You might want to initialize other properties as needed
-    };
-
     setUpdatedBoard((prevState) => {
-      return { ...prevState, columns: [...prevState.columns, temporaryColumn] };
+      return {
+        ...prevState,
+        columns: [...prevState.columns, { name: "New Column", tasks: [] }],
+      };
     });
   };
 
   const updateBoard = () => {
-    // Remove temporary IDs before sending the request
-    const updatedBoardWithoutTempIds = {
-      ...updatedBoard,
-      columns: updatedBoard.columns.map((column) => {
-        const { _id, ...rest } = column;
-        return _id.startsWith("temp_") ? rest : column;
-      }),
-    };
-
-    dispatch(editBoard(updatedBoardWithoutTempIds));
+    dispatch(editBoard(updatedBoard));
   };
 
   return (
@@ -101,13 +85,13 @@ export default function EditBoardModal({ closeModal, board }) {
         <Label aria-hidden="true">Board Collumns</Label>
         <InputContainer>
           {updatedBoard.columns.map((col, index) => (
-            <FlexPair key={col._id}>
+            <FlexPair key={index}>
               <Input
                 onChange={(e) => onColumnNameChange(e, index)}
                 value={col.name}
               />
               <SvgButton
-                onClick={() => onDeleteColumn(col._id)}
+                onClick={() => onDeleteColumn(index)}
                 type="button"
                 aria-label="Delete column"
               >
