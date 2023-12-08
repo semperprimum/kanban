@@ -137,7 +137,7 @@ const deleteTask = asyncHandler(async (req, res) => {
   task.deleteOne();
   await board.save();
 
-  res.status(200).json({ id: task.id });
+  res.status(200).json(board);
 });
 
 module.exports = {
