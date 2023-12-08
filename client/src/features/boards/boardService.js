@@ -26,7 +26,7 @@ const getBoards = async (token) => {
   return response.data.boards;
 };
 
-// Get user boards
+// Delete board
 const deleteBoard = async (boardId, token) => {
   const config = {
     headers: {
@@ -35,6 +35,19 @@ const deleteBoard = async (boardId, token) => {
   };
 
   const response = await axios.delete(API_URL + boardId, config);
+  return response.data;
+};
+
+// Delete board
+const editBoard = async (boardId, boardData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer: ${token}`,
+    },
+  };
+
+  const response = await axios.put(API_URL + boardId, boardData, config);
+  console.log(response);
   return response.data;
 };
 
@@ -70,11 +83,28 @@ const editTask = async (boardId, taskData, token) => {
   return response.data;
 };
 
+// Delte task
+const deleteTask = async (boardId, taskId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer: ${token}`,
+    },
+  };
+
+  const response = await axios.delete(
+    API_URL + boardId + "/task/" + taskId,
+    config
+  );
+  return response.data;
+};
+
 const boardService = {
   createBoard,
   getBoards,
   deleteBoard,
   createTask,
   editTask,
+  deleteTask,
+  editBoard,
 };
 export default boardService;

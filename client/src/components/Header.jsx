@@ -33,7 +33,12 @@ export function Header({
           closeModal={addModal.closeModal}
         />
       )}
-      {editModal.isOpen && <EditBoardModal closeModal={editModal.closeModal} />}
+      {editModal.isOpen && (
+        <EditBoardModal
+          board={boards[activeBoard]}
+          closeModal={editModal.closeModal}
+        />
+      )}
       {deleteModal.isOpen && (
         <DeleteBoardModal
           board={boards[activeBoard]}

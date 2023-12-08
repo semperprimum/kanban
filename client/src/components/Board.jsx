@@ -51,7 +51,11 @@ export function Board({ board }) {
       )}
       {editModal.isOpen && <EditTaskModal closeModal={editModal.closeModal} />}
       {deleteModal.isOpen && (
-        <DeleteTaskModal closeModal={deleteModal.closeModal} />
+        <DeleteTaskModal
+          boardId={board._id}
+          taskId={activeTask._id}
+          closeModal={deleteModal.closeModal}
+        />
       )}
       {editBoardModal.isOpen && (
         <EditBoardModal closeModal={editBoardModal.closeModal} />

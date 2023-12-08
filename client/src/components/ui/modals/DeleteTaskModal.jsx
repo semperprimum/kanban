@@ -1,8 +1,11 @@
+import { useDispatch } from "react-redux";
 import { ModalHeader, Paragraph } from "../../styles/Modal.styled";
 import { Button } from "../Button.styled";
 import { Modal } from "./Modal";
+import { deleteTask } from "../../../features/boards/boardSlice";
 
-export default function DeleteTaskModal({ closeModal }) {
+export default function DeleteTaskModal({ closeModal, taskId, boardId }) {
+  const dispatch = useDispatch();
   return (
     <Modal closeModal={closeModal}>
       <ModalHeader style={{ color: "var(--clr-accent-200)" }}>
@@ -12,7 +15,12 @@ export default function DeleteTaskModal({ closeModal }) {
         Are you sure you want to delete the ‘Build settings UI’ task and its
         subtasks? This action cannot be reversed.
       </Paragraph>
-      <Button $small $danger style={{ width: "100%", marginTop: "1.5rem" }}>
+      <Button
+        onClick={() => dispatch(deleteTask({ boardId, taskId }))}
+        $small
+        $danger
+        style={{ width: "100%", marginTop: "1.5rem" }}
+      >
         Delete
       </Button>
       <Button

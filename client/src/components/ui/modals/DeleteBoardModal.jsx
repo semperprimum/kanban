@@ -30,7 +30,12 @@ export default function DeleteBoardModal({
       >
         Delete
       </Button>
-      <Button $small $secondary style={{ width: "100%", marginTop: "1rem" }}>
+      <Button
+        onClick={() => closeModal()}
+        $small
+        $secondary
+        style={{ width: "100%", marginTop: "1rem" }}
+      >
         Cancel
       </Button>
     </Modal>
