@@ -25,6 +25,8 @@ export function AddBoardModal({ closeModal }) {
     e.preventDefault();
 
     dispatch(createBoard(formData));
+
+    closeModal();
   };
 
   const handleAddColumn = () => {

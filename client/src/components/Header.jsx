@@ -15,17 +15,31 @@ import { useModal } from "../hooks/useModal";
 import EditBoardModal from "./ui/modals/EditBoardModal";
 import DeleteBoardModal from "./ui/modals/DeleteBoardModal";
 
-export function Header({ setIsNavOpen, activeBoard, boards, handleActiveBoardChange }) {
+export function Header({
+  setIsNavOpen,
+  activeBoard,
+  boards,
+  handleActiveBoardChange,
+}) {
   const addModal = useModal();
   const editModal = useModal();
   const deleteModal = useModal();
 
   return (
     <>
-      {addModal.isOpen && <AddTaskModal closeModal={addModal.closeModal} />}
+      {addModal.isOpen && (
+        <AddTaskModal
+          board={boards[activeBoard]}
+          closeModal={addModal.closeModal}
+        />
+      )}
       {editModal.isOpen && <EditBoardModal closeModal={editModal.closeModal} />}
       {deleteModal.isOpen && (
-        <DeleteBoardModal board={boards[activeBoard]} handleActiveBoardChange={handleActiveBoardChange} closeModal={deleteModal.closeModal} />
+        <DeleteBoardModal
+          board={boards[activeBoard]}
+          handleActiveBoardChange={handleActiveBoardChange}
+          closeModal={deleteModal.closeModal}
+        />
       )}
       <HeaderContainer>
         <LeftContainer>

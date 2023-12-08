@@ -38,9 +38,43 @@ const deleteBoard = async (boardId, token) => {
   return response.data;
 };
 
+// Create task
+const createTask = async (boardId, taskData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer: ${token}`,
+    },
+  };
+
+  const response = await axios.post(
+    API_URL + boardId + "/task",
+    taskData,
+    config
+  );
+  return response.data;
+};
+
+// Edit task
+const editTask = async (boardId, taskData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer: ${token}`,
+    },
+  };
+
+  const response = await axios.put(
+    API_URL + boardId + "/task/" + taskData._id,
+    taskData,
+    config
+  );
+  return response.data;
+};
+
 const boardService = {
   createBoard,
   getBoards,
   deleteBoard,
+  createTask,
+  editTask,
 };
 export default boardService;

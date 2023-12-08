@@ -17,6 +17,8 @@ export const ModalContainer = styled.div`
   background-color: var(--clr-neutral-600);
   border-radius: 0.375rem;
   width: calc(100% - 2rem);
+  max-height: calc(100vh - 5rem);
+  overflow: auto;
 `;
 
 export const ModalHeader = styled.h3`
@@ -108,6 +110,7 @@ export const FlexPair = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const InputContainer = styled.div`

@@ -68,6 +68,46 @@ export const deleteBoard = createAsyncThunk(
   }
 );
 
+export const createTask = createAsyncThunk(
+  "boards/createTask",
+  async (payload, thunkAPI) => {
+    const { boardId, taskData } = payload;
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await boardService.createTask(boardId, taskData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error &&
+          error.response.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const editTask = createAsyncThunk(
+  "boards/editTask",
+  async (payload, thunkAPI) => {
+    const { boardId, taskData } = payload;
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await boardService.editTask(boardId, taskData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error &&
+          error.response.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const boardSlice = createSlice({
   name: "board",
   initialState,
@@ -113,6 +153,48 @@ export const boardSlice = createSlice({
         );
       })
       .addCase(deleteBoard.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(createTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        const boardIndex = state.boards.findIndex(
+          (board) => board._id === action.payload._id
+        );
+
+        if (boardIndex !== -1) {
+          const updatedBoards = [...state.boards];
+          updatedBoards[boardIndex] = action.payload;
+          state.boards = updatedBoards;
+        }
+      })
+      .addCase(createTask.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(editTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        const boardIndex = state.boards.findIndex(
+          (board) => board._id === action.payload._id
+        );
+
+        if (boardIndex !== -1) {
+          const updatedBoards = [...state.boards];
+          updatedBoards[boardIndex] = action.payload;
+          state.boards = updatedBoards;
+        }
+      })
+      .addCase(editTask.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

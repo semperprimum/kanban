@@ -13,8 +13,11 @@ import EditTaskModal from "./ui/modals/EditTaskModal";
 import EditBoardModal from "./ui/modals/EditBoardModal";
 import DeleteTaskModal from "./ui/modals/DeleteTaskModal";
 import { useModal } from "../hooks/useModal";
+import { useState } from "react";
+import { countCompletedTasks } from "../utils/countTasks";
 
 export function Board({ board }) {
+  const [activeTask, setActiveTask] = useState(null);
   const viewModal = useModal();
   const editModal = useModal();
   const deleteModal = useModal();
@@ -30,14 +33,17 @@ export function Board({ board }) {
     deleteModal.openModal();
   };
 
-  const countCompletedTasks = (arr) => {
-    const completedTasks = arr.filter((task) => task.isCompleted);
-    return completedTasks.length;
+  const onViewTask = (task) => {
+    setActiveTask(task);
+    viewModal.openModal();
   };
+
   return (
     <>
       {viewModal.isOpen && (
         <ViewTaskModal
+          task={activeTask}
+          board={board}
           onEditTask={onEditTask}
           onDeleteTask={onDeleteTask}
           closeModal={viewModal.closeModal}
@@ -58,11 +64,11 @@ export function Board({ board }) {
             </ColumnName>
             <TaskList role="list">
               {col.tasks.map((task) => (
-                <TaskItem key={task._id}>
+                <TaskItem onClick={() => onViewTask(task)} key={task._id}>
                   <TaskName>{task.title}</TaskName>
                   <Subtasks>
-                    {countCompletedTasks(col.tasks)} of {col.tasks.length}{" "}
-                    subtasks
+                    {countCompletedTasks(task.subtasks)} of{" "}
+                    {task.subtasks.length} subtasks
                   </Subtasks>
                 </TaskItem>
               ))}
