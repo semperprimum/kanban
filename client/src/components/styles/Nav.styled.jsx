@@ -48,6 +48,7 @@ export const Paragraph = styled.p`
   line-height: normal;
   letter-spacing: 0.15rem;
   text-transform: uppercase;
+  padding-left: 1rem;
 `;
 
 export const BoardsList = styled.ul`
@@ -57,28 +58,31 @@ export const BoardsList = styled.ul`
 
 export const BoardItem = styled.li`
   padding: 0 0;
+  /* &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    transform: translateY(0rem);
+    background-color: transparent;
+    height: 3.2187rem;
+    width: 15rem;
+    z-index: -1;
+    transition: background-color 150ms ease;
+    border-radius: 0rem 100vmax 100vmax 0rem;
+  }
   ${(props) =>
     props.$active &&
     css`
-      &:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        transform: translateY(0.1rem);
-        background: var(--clr-primary-200);
-        height: 3rem;
-        width: 15rem;
-        z-index: -1;
-        border-radius: 0rem 100vmax 100vmax 0rem;
+      color: var(--clr-neutral-100);
+      &::before {
+        background-color: var(--clr-primary-200);
       }
-      & > * {
-        color: var(--clr-neutral-100) !important;
-      }
-    `}
+    `} */
 `;
 
 export const NavBtn = styled.button`
   display: flex;
+  position: relative;
   gap: 0.5rem;
   width: 100%;
   align-items: center;
@@ -89,8 +93,44 @@ export const NavBtn = styled.button`
   line-height: normal;
   font-weight: var(--fw-bold);
   font-size: var(--fs-300);
+
+  cursor: pointer;
+
   & > svg {
     fill: currentColor;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 15rem;
+    left: -1rem;
+    background-color: transparent;
+    transition: background-color 150ms ease, color 150ms ease;
+    z-index: -1;
+    border-radius: 0rem 6.25rem 6.25rem 0rem;
+  }
+
+  ${(props) =>
+    props.$active &&
+    css`
+      color: var(--clr-neutral-100);
+      &::before {
+        background-color: var(--clr-primary-200);
+      }
+    `}
+  @media only screen and (min-width: 60em) {
+    ${(props) =>
+      !props.$active &&
+      css`
+        &:hover {
+          color: var(--clr-primary-200);
+          &::before {
+            background-color: var(--clr-neutral-100);
+          }
+        }
+      `}
   }
 `;
 

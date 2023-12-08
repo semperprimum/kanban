@@ -12,6 +12,9 @@ export const ButtonToggle = styled.button`
   &:disabled {
     opacity: 0.25;
   }
+  @media only screen and (min-width: 60em) {
+    cursor: pointer;
+  }
 `;
 
 export const DropdownWrapper = styled.div`
@@ -40,4 +43,7 @@ export const DropdownItem = styled.button`
   background: none;
   border: none;
   color: ${(props) => props.color || "var(--clr-neutral-400)"};
+  @media only screen and (min-width: 60em) {
+    cursor: pointer;
+  }
 `;

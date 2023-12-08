@@ -33,7 +33,7 @@ export const Home = () => {
     return () => {
       dispatch(reset());
     };
-  }, [user, navigate, isError, message, dispatch]);
+  }, [user, navigate, dispatch]);
 
   const [activeBoard, setActiveBoard] = useState(0);
 

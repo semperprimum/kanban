@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login, reset } from "../../features/auth/authSlice";
-import { AiOutlineLoading } from "react-icons/ai";
 import {
   AuthContainer,
   AuthHeader,

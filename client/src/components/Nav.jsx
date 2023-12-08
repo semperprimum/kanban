@@ -27,7 +27,7 @@ export function Nav({
   const onLogout = () => {
     dispatch(logout());
     dispatch(reset());
-    navigate("/");
+    navigate("/login");
   };
 
   const isNarrowScreen = useMatchMedia("(max-width: 37.5em)");
@@ -42,8 +42,9 @@ export function Nav({
           <Paragraph>All boards (3)</Paragraph>
           <BoardsList role="list">
             {boards.map((board, index) => (
-              <BoardItem key={board._id} $active={index === activeBoard}>
+              <BoardItem key={board._id}>
                 <NavBtn
+                  $active={index === activeBoard}
                   onClick={() => {
                     handleActiveBoardChange(index);
                     {

@@ -107,8 +107,19 @@ export const SelectWrapper = styled.div`
 export const SvgButton = styled.button`
   background: none;
   border: none;
+  color: var(--clr-neutral-400);
+
+  @media only screen and (min-width: 60em) {
+    cursor: pointer;
+
+    &:hover {
+      color: var(--clr-accent-200);
+    }
+  }
+
   & > svg {
     display: block;
+    fill: currentColor;
   }
 `;
 

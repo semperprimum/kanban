@@ -29,4 +29,22 @@ export const Button = styled.button`
     font-size: var(--fs-300);
     padding: ${(props) => (props.$small ? "0.50rem 1rem" : "0.9rem 1.5rem")};
   }
+
+  @media only screen and (min-width: 60em) {
+    cursor: pointer;
+    transition: color 150ms ease, background-color 150ms ease;
+
+    &:hover {
+      background-color: var(--clr-primary-100);
+    }
+
+    ${(props) =>
+      props.$secondary &&
+      css`
+        &:hover {
+          color: var(--clr-primary-100);
+          background-color: var(--clr-neutral-100);
+        }
+      `}
+  }
 `;

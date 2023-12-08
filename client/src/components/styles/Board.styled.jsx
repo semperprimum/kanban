@@ -71,11 +71,21 @@ export const TaskItem = styled.li`
   background-color: var(--clr-neutral-600);
   border-radius: 0.5rem;
   box-shadow: 0px 4px 6px 0px rgba(54, 78, 126, 0.1);
+
+  @media only screen and (min-width: 60em) {
+    cursor: pointer;
+    &:hover {
+      & > p:nth-child(1) {
+        color: var(--clr-primary-200);
+      }
+    }
+  }
 `;
 
 export const TaskName = styled.p`
   font-weight: var(--fw-bold);
   margin-bottom: 0.5rem;
+  transition: color 150ms ease;
 `;
 
 export const Subtasks = styled.p`
@@ -96,6 +106,14 @@ export const NewColumnBtn = styled.button`
     rgba(43, 44, 55, 0.25) 0%,
     rgba(43, 44, 55, 0.13) 100%
   );
+
+  @media only screen and (min-width: 60em) {
+    cursor: pointer;
+    transition: color 150ms ease;
+    &:hover {
+      color: var(--clr-primary-200);
+    }
+  }
 `;
 
 export const EmptyBoardContainer = styled.div`
