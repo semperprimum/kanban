@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const Board = require("../models/boardModel");
+const data = require("../data.json");
 
 /**
  * @description Register new user
@@ -33,11 +35,17 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
+    const token = generateToken(user.id)
+
+    await Board.create({ ...data.boards[0], user: user.id });
+    await Board.create({ ...data.boards[1], user: user.id });
+    await Board.create({ ...data.boards[2], user: user.id });
+
     res.status(201).json({
       _id: user.id,
       name: user.name,
       email: user.email,
-      token: genereateToken(user.id),
+      token,
     });
   } else {
     res.status(400);
@@ -60,7 +68,7 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
-      token: genereateToken(user.id),
+      token: generateToken(user.id),
     });
   } else {
     res.status(400);
@@ -80,7 +88,7 @@ const getMe = asyncHandler(async (req, res) => {
 });
 
 // Generate JWT
-const genereateToken = (id) => {
+const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });

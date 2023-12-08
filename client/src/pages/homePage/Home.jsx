@@ -11,12 +11,12 @@ import { ShowSidebar } from "../../components/styles/Nav.styled";
 import ShowSidebarIcon from "../../assets/icon-show-sidebar.svg?react";
 
 export const Home = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
+  const isNarrowScreen = useMatchMedia("(max-width: 37.5em)");
+
+  const [isNavOpen, setIsNavOpen] = useState(isNarrowScreen ? false : true);
   const createBoardModal = useModal();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const isNarrowScreen = useMatchMedia("(max-width: 37.5em)");
 
   const { user } = useSelector((state) => state.auth);
 
