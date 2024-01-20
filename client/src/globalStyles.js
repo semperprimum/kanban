@@ -146,7 +146,7 @@ select {
 */
 
 /* Tablet 
- Same as mobile, ony Board name is 1.25 now
+ Same as mobile, only the Board name is 1.25 now
 */
 
 /* Desktop

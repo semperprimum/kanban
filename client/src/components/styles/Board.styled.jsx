@@ -124,6 +124,10 @@ export const EmptyBoardContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (min-width: 60em) {
+    width: 100%;
+  }
 `;
 
 export const EmptyBoardText = styled.h2`

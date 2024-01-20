@@ -5,6 +5,7 @@ const User = require("../models/userModel");
 const Board = require("../models/boardModel");
 const data = require("../data.json");
 
+
 /**
  * @description Register new user
  * @route POST /api/users/

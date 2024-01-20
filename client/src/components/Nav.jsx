@@ -9,8 +9,8 @@ import {
 import { DarkBg } from "./styles/Modal.styled";
 import IconBoard from "../assets/icon-board.svg?react";
 import HideSidebarIcon from "../assets/icon-hide-sidebar.svg?react";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 import useMatchMedia from "../hooks/useMatchMedia";
 
@@ -39,7 +39,7 @@ export function Nav({
       )}
       <NavContainer>
         <div>
-          <Paragraph>All boards (3)</Paragraph>
+          <Paragraph>All boards ({boards.length})</Paragraph>
           <BoardsList role="list">
             {boards.map((board, index) => (
               <BoardItem key={board._id}>
