@@ -2,10 +2,10 @@
 
 ### Built with the MERN (MongoDB, Express, React, NodeJS) stack.
 
-![Board](/images/board.jpg)
+![Board](https://i.imgur.com/alEu0aZ.png)
 
-![Edit](/images/edit.jpg)
+![Edit](<[/images/edit.jpg](https://i.imgur.com/qjwHXF9.png)>)
 
-![View](/images/view.jpg)
+![View](https://i.imgur.com/7XloTIr.png)
 
-![Register](/images/register.png)
+![Register](https://i.imgur.com/Cf0DUUh.png)
